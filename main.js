@@ -16,9 +16,27 @@ function Factory(){
             return false //player2
         }
     }
+    function pickAsquare(player){
+        return window.prompt(`${player} turn,pick a square:`);
+    }
+    function choiceIsValid(choice,array){
+        if(choice<0||choice>8){
+            alert("You can pick squares only in range from 0 to 8");
+            return false;
+        }else if(array[choice]!==null){
+            alert("This square is taken!")
+            return false;
+        }else{return true};   
+    }
     function makeMove(turn,array){
         const player=turn?"player1":"player2";
-        const choice=window.prompt(`${player} turn,pick a square:`);
+        let choice;
+        while(true){
+            choice=Number(pickAsquare(player));
+            if(choiceIsValid(choice,array)){
+                break;
+            }
+        }
         array[choice]=turn;
     }
     function checkForWin(turn,array){
@@ -53,7 +71,7 @@ const PlayGame=function(){
         if(functions.checkForWin(turn,array)===true){
             win=true;
             winner=player;
-            break;5
+            break;
         }
     }
     functions.endGame(win,winner);
